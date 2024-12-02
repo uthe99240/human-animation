@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Reset</title>
+
+    <style>
+        .human {
+            position: absolute;
+            animation-name: example;
+            animation-duration: 4s;
+            animation-fill-mode: forwards;
+            animation-play-state: paused; /* Initially paused */
+        }
+
+        @keyframes example {
+            0% {
+                left: 0px;
+                top: 0px;
+            }
+
+            25% {
+                left: 300px;
+                top: -30px;
+            }
+
+            50% {
+                left: 600px;
+                top: -60px;
+            }
+
+            75% {
+                left: 950px;
+                top: -120px;
+            }
+
+            100% {
+                left: 1320px;
+                top: -160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Content for scrolling -->
+    <div style="height: 100vh;">
+        Scroll down to see the animation
+    </div>
+
+    <div id="animation-section" style="position: relative; margin-top: 150px; height: 400px; background: white;">
+        <img class="human" id="human" src="/image/Picture1.png" alt="human">
+        <div style="position: absolute; top: 300px; left: 300px;">
+            <img src="/image/Picture2.png" alt="">
+            <img style="position: absolute; top: 80px; left: 130px;" src="/image/Picture6.png" alt="">
+        </div>
+        <div style="position: absolute; top: 250px; left: 650px;">
+            <img src="/image/Picture3.png" alt="">
+            <img style="position: absolute; top: 80px; left: 130px;" src="/image/Picture7.png" alt="">
+        </div>
+        <div style="position: absolute; top: 200px; left: 1000px;">
+            <img src="/image/Picture4.png" alt="">
+            <img style="position: absolute; top: 80px; left: 130px;" src="/image/Picture8.png" alt="">
+        </div>
+        <div style="position: absolute; top: 150px; left: 1350px;">
+            <img src="/image/Picture5.png" alt="">
+            <img style="position: absolute; top: 80px; left: 130px;" src="/image/Picture9.png" alt="">
+        </div>
+    </div>
+</body>
+
+<script>
+    const humanElement = document.querySelector('.human');
+
+    // Use Intersection Observer to detect visibility
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Reset animation by removing and re-adding the class
+                humanElement.style.animation = 'none'; // Clear the animation
+                setTimeout(() => {
+                    humanElement.style.animation = 'example 4s forwards'; // Restart animation
+                }, 0);
+            } else {
+                // Reset the element's position when not visible
+                humanElement.style.animation = 'none';
+            }
+        });
+    });
+
+    // Observe the animation section
+    observer.observe(document.getElementById('animation-section'));
+</script>
+
+</html>
